@@ -1,0 +1,40 @@
+{
+  "name": "descartes",
+  "version": "0.0.0",
+  "description": "Mock async JavaScript libraries",
+  "homepage": "https://github.com/mariusGundersen/descartes",
+  "author": {
+    "name": "Marius Gundersen",
+    "email": "npm@mariusgundersen.net",
+    "url": "https://mariusgundersen.net"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "keywords": [
+    "async",
+    "mock",
+    "test"
+  ],
+  "repository": "mariusGundersen/descartes",
+  "devDependencies": {
+    "gulp": "^3.6.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^0.4.5",
+    "gulp-coveralls": "^0.1.0",
+    "gulp-babel": "^5.1.0",
+    "del": "^2.0.2",
+    "babel-core": "^5.5.0",
+    "isparta": "^3.0.3"
+  },
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "MIT"
+}
