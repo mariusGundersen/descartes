@@ -12,9 +12,37 @@ $ npm install --save descartes
 ## Usage
 
 ```js
-var descartes = require('descartes');
+import {awaitable, sequence} from 'descartes';
 
-descartes('Rainbow');
+it("should behave like this", async function(){
+  var stub = awaitable();
+  
+  const result = myAsncMethodToTest(stub);
+
+  await stub.called();
+  await stub.calledWith('something');
+  await stub.calledWithExactly('something', 'else');
+  
+  await stub.resolvesTo('something');
+  await stub.rejects(new Error());
+  
+  await stub.throws(new Error()).unless.calledWithExactly('something');
+  await stub.rejects(new Error()).unless.calledWithExactly('something');
+  
+  const call = await stub.called();
+  call.args[0].should.equal('something');
+  call.args[1].should.be.a('Function');
+  call.args[1](null, 'result');
+  
+  const seq = sequence();
+  
+  await stub.inSequence(seq).calledWith('1');
+  await stub.inSequence(seq).calledWith('2');
+  await stub.inSequence(seq).calledWith('3');
+  
+  return await stub();
+});
+
 ```
 
 ## License
