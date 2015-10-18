@@ -31,8 +31,8 @@ gulp.task('nsp', function (cb) {
 gulp.task('pre-test', function () {
   return gulp.src('lib/**/*.js')
     .pipe(istanbul({
-      includeUntested: true
-,      instrumenter: isparta.Instrumenter
+      includeUntested: true,
+      instrumenter: isparta.Instrumenter
     }))
     .pipe(istanbul.hookRequire());
 });
@@ -50,6 +50,16 @@ gulp.task('test', ['pre-test'], function (cb) {
     .on('end', function () {
       cb(mochaErr);
     });
+});
+
+gulp.task('onlyTest', function () {
+  return gulp.src('test/**/*.js')
+    .pipe(plumber())
+    .pipe(mocha({reporter: 'spec'}));
+});
+
+gulp.task('watch', ['onlyTest'], function () {
+  return gulp.watch('**/*.js', ['onlyTest']);
 });
 
 gulp.task('coveralls', ['test'], function () {
