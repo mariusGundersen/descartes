@@ -7,12 +7,13 @@ describe('called', function () {
     this.log = awaitable();
   });
   
-  it('should waint until the log method is called', async function () {
+  it('should wait until the log method is called', async function () {
     const result = doSomethingAsync(this.log);
     
+    this.log.returns(5);
     await this.log.called();
     
-    return await result;
+    assert.equal(await result, 5);
   });
 });
 
@@ -22,12 +23,13 @@ describe('calledWith', function () {
     this.log = awaitable();
   });
   
-  it('should waint until the log method is called', async function () {
+  it('should wait until the log method is called', async function () {
     const result = doSomethingAsync(this.log);
     
+    this.log.resolves(5);
     await this.log.calledWith('resolved');
     
-    return await result;
+    assert.equal(await result, 5);
   });
 });
 
@@ -37,7 +39,7 @@ describe('calledWithExactly', function () {
     this.log = awaitable();
   });
   
-  it('should waint until the log method is called', async function () {
+  it('should wait until the log method is called', async function () {
     const result = doSomethingAsync(this.log);
     
     await this.log.calledWithExactly('resolved', 'with', 'args');
@@ -48,5 +50,5 @@ describe('calledWithExactly', function () {
 
 async function doSomethingAsync(log){
   await Promise.resolve();
-  log('resolved', 'with', 'args');
+  return log('resolved', 'with', 'args');
 }
