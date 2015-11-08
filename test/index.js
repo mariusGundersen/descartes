@@ -85,6 +85,6 @@ async function doSomethingAsync(log){
 async function doSomethingMoreComplexAsync(log){
   log('hello');
   await Promise.resolve();
-  log('bye');
+  log('bye', 'bye');
   return 50;
 }
