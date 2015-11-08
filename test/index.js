@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {awaitable} from '../lib';
+import {awaitable, start} from '../lib';
 
 describe('called', function () {
   
@@ -48,7 +48,27 @@ describe('calledWithExactly', function () {
   });
 });
 
+describe('sync start', function(){
+  it('should let you set up the first await after starting the async function', async function(){
+    const log = awaitable();
+    const result = start(() => doSomethingMoreComplexAsync(log));
+    
+    await log.calledWith('hello');
+    
+    await log.calledWith('bye');
+    
+    return await result;
+  });
+});
+
 async function doSomethingAsync(log){
   await Promise.resolve();
   return log('resolved', 'with', 'args');
+}
+
+async function doSomethingMoreComplexAsync(log){
+  log('hello');
+  await Promise.resolve();
+  log('bye');
+  return 50;
 }
