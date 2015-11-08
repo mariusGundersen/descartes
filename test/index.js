@@ -1,5 +1,6 @@
 import assert from 'assert';
 import {awaitable, start} from '../lib';
+import {withArgs, withExactArgs, onThis} from '../lib';
 
 describe('called', function () {
   
@@ -27,7 +28,7 @@ describe('calledWith', function () {
     const result = doSomethingAsync(this.log);
     
     this.log.resolves(5);
-    await this.log.calledWith('resolved');
+    await this.log.called(withArgs('resolved'));
     
     assert.equal(await result, 5);
   });
@@ -42,7 +43,22 @@ describe('calledWithExactly', function () {
   it('should wait until the log method is called', async function () {
     const result = doSomethingAsync(this.log);
     
-    await this.log.calledWithExactly('resolved', 'with', 'args');
+    await this.log.called(withExactArgs('resolved', 'with', 'args'));
+    
+    return await result;
+  });
+});
+
+describe('calledOnThis', function () {
+  
+  beforeEach(function(){
+    this.log = awaitable();
+  });
+  
+  it('should wait until the log method is called', async function () {
+    const result = doSomethingAsync(this.log);
+    
+    await this.log.called(onThis(undefined));
     
     return await result;
   });
@@ -53,9 +69,9 @@ describe('sync start', function(){
     const log = awaitable();
     const result = start(() => doSomethingMoreComplexAsync(log));
     
-    await log.calledWith('hello');
-    
-    await log.calledWith('bye');
+    await log.called(withArgs('hello'));
+
+    await log.called(withArgs('bye'));
     
     return await result;
   });
