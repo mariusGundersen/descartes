@@ -12,35 +12,34 @@ $ npm install --save descartes
 ## Usage
 
 ```js
-import {awaitable, sequence} from 'descartes';
+import {start, awaitable, withArgs, withExactArgs, onThis} from 'descartes';
 
 it("should behave like this", async function(){
   var stub = awaitable();
   
-  const result = myAsncMethodToTest(stub);
+  const result = start(() => myAsyncMethod(stub));
 
   await stub.called();
-  await stub.calledWith('something');
-  await stub.calledWithExactly('something', 'else');
+  await stub.called(withArgs('something'));
+  await stub.called(withExactArgs('something', 'else'));
   
-  await stub.resolvesTo('something');
-  await stub.rejects(new Error());
+  stub.resolvesTo('something');
+  await stub.called();
   
-  await stub.throws(new Error()).unless.calledWithExactly('something');
-  await stub.rejects(new Error()).unless.calledWithExactly('something');
+  stub.returns(512);
+  await stub.called();
   
+  stub.throws(new Error('it should handle this'));
+  await stub.called(
+    withArgs(13),
+    onThis(window));
+    
   const call = await stub.called();
   call.args[0].should.equal('something');
   call.args[1].should.be.a('Function');
   call.args[1](null, 'result');
   
-  const seq = sequence();
-  
-  await stub.inSequence(seq).calledWith('1');
-  await stub.inSequence(seq).calledWith('2');
-  await stub.inSequence(seq).calledWith('3');
-  
-  return await stub();
+  return await result;
 });
 
 ```
