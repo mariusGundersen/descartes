@@ -1,17 +1,17 @@
 import assert from 'assert';
-import {awaitable, start} from '../lib';
-import {withArgs, withExactArgs, onThis} from '../lib';
+import probe from '../lib/probe';
+import {withArgs, withExactArgs, onThis} from '../lib/matchers';
 
 describe('called', function () {
   
   beforeEach(function(){
-    this.log = awaitable();
+    this.log = probe();
   });
   
   it('should wait until the log method is called', async function () {
     const result = doSomethingAsync(this.log);
     
-    this.log.returns(5);
+    this.log.resolves(5);
     await this.log.called();
     
     assert.equal(await result, 5);
@@ -21,7 +21,7 @@ describe('called', function () {
 describe('calledWith', function () {
   
   beforeEach(function(){
-    this.log = awaitable();
+    this.log = probe();
   });
   
   it('should wait until the log method is called', async function () {
@@ -37,7 +37,7 @@ describe('calledWith', function () {
 describe('calledWithExactly', function () {
   
   beforeEach(function(){
-    this.log = awaitable();
+    this.log = probe();
   });
   
   it('should wait until the log method is called', async function () {
@@ -52,7 +52,7 @@ describe('calledWithExactly', function () {
 describe('calledOnThis', function () {
   
   beforeEach(function(){
-    this.log = awaitable();
+    this.log = probe();
   });
   
   it('should wait until the log method is called', async function () {
@@ -66,8 +66,8 @@ describe('calledOnThis', function () {
 
 describe('sync start', function(){
   it('should let you set up the first await after starting the async function', async function(){
-    const log = awaitable();
-    const result = start(() => doSomethingMoreComplexAsync(log));
+    const log = probe();
+    const result = doSomethingMoreComplexAsync(log);
     
     await log.called(withArgs('hello'));
 
