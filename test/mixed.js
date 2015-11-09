@@ -11,7 +11,7 @@ describe('mixed', function () {
   });
   
   it('should handle sync methods too', async function () {
-    const result = start(() => doSomethingAsync(this.log, this.a, this.b));
+    const result = doSomethingAsync(this.log, this.a, this.b);
     console.log('  1');
     await this.log.called(withArgs('calling a'));
     console.log('  2');
