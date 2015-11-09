@@ -12,34 +12,32 @@ $ npm install --save descartes
 ## Usage
 
 ```js
-import {start, awaitable, withArgs, withExactArgs, onThis} from 'descartes';
+import {sensor, probe, withArgs, withExactArgs, onThis} from 'descartes';
 
 it("should behave like this", async function(){
-  var stub = awaitable();
+  const stub = probe();
+  const spy = sensor();
   
-  const result = start(() => myAsyncMethod(stub));
+  const result = myAsyncMethod(spy, stub);
 
-  await stub.called();
-  await stub.called(withArgs('something'));
-  await stub.called(withExactArgs('something', 'else'));
+  await spy.called();
+  await spy.called(withArgs('something'));
+  await spy.called(withExactArgs('something', 'else'));
   
   stub.resolvesTo('something');
   await stub.called();
   
-  stub.returns(512);
-  await stub.called();
-  
-  stub.throws(new Error('it should handle this'));
+  stub.rejects(new Error('it should handle this'));
   await stub.called(
     withArgs(13),
     onThis(window));
     
-  const call = await stub.called();
+  const call = await spy.called();
   call.args[0].should.equal('something');
   call.args[1].should.be.a('Function');
   call.args[1](null, 'result');
   
-  return await result;
+  (await result).should.equal('expected value');
 });
 
 ```
