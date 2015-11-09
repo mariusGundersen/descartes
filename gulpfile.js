@@ -59,7 +59,7 @@ gulp.task('onlyTest', function () {
 });
 
 gulp.task('watch', ['onlyTest'], function () {
-  return gulp.watch('**/*.js', ['onlyTest']);
+  return gulp.watch(['lib/**/*.js', 'test/**/*.js'], ['onlyTest']);
 });
 
 gulp.task('coveralls', ['test'], function () {
