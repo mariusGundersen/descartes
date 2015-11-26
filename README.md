@@ -12,7 +12,7 @@ $ npm install --save descartes
 ## Usage
 
 ```js
-import {sensor, probe, withArgs, withExactArgs, onThis} from 'descartes';
+import {Jar, withArgs, withExactArgs, onThis} from 'descartes';
 
 it("should behave like this", async function(){
   const stub = probe();
