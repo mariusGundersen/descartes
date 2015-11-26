@@ -4,17 +4,15 @@ var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var excludeGitignore = require('gulp-exclude-gitignore');
 var mocha = require('gulp-mocha');
-var istanbul = require('gulp-istanbul');
 var nsp = require('gulp-nsp');
 var plumber = require('gulp-plumber');
-var coveralls = require('gulp-coveralls');
 var babel = require('gulp-babel');
 var del = require('del');
-var isparta = require('isparta');
 
 // Initialize the babel transpiler so ES2015 files gets compiled
 // when they're loaded
 require('babel-core/register');
+require("babel-polyfill");
 
 gulp.task('static', function () {
   return gulp.src('**/*.js')
@@ -28,16 +26,7 @@ gulp.task('nsp', function (cb) {
   nsp({package: __dirname + '/package.json'}, cb);
 });
 
-gulp.task('pre-test', function () {
-  return gulp.src('lib/**/*.js')
-    .pipe(istanbul({
-      includeUntested: true,
-      instrumenter: isparta.Instrumenter
-    }))
-    .pipe(istanbul.hookRequire());
-});
-
-gulp.task('test', ['pre-test'], function (cb) {
+gulp.task('test', function (cb) {
   var mochaErr;
 
   gulp.src('test/**/*.js')
@@ -46,7 +35,6 @@ gulp.task('test', ['pre-test'], function (cb) {
     .on('error', function (err) {
       mochaErr = err;
     })
-    .pipe(istanbul.writeReports())
     .on('end', function () {
       cb(mochaErr);
     });
@@ -62,15 +50,6 @@ gulp.task('watch', ['onlyTest'], function () {
   return gulp.watch(['lib/**/*.js', 'test/**/*.js'], ['onlyTest']);
 });
 
-gulp.task('coveralls', ['test'], function () {
-  if (!process.env.CI) {
-    return;
-  }
-
-  return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
-    .pipe(coveralls());
-});
-
 gulp.task('babel', ['clean'], function () {
   return gulp.src('lib/**/*.js')
     .pipe(babel())
@@ -82,4 +61,4 @@ gulp.task('clean', function () {
 });
 
 gulp.task('prepublish', ['nsp', 'babel']);
-gulp.task('default', ['static', 'test', 'coveralls']);
+gulp.task('default', ['static', 'test']);
