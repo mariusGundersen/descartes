@@ -22,6 +22,7 @@
     "babel-core": "^6.2.1",
     "babel-eslint": "^4.1.6",
     "babel-plugin-transform-async-to-generator": "^6.1.18",
+    "babel-plugin-transform-export-extensions": "^6.1.18",
     "babel-preset-es2015-without-regenerator": "^1.0.1",
     "del": "^2.0.2",
     "gulp": "^3.6.0",

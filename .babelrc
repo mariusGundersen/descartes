@@ -1,4 +1,4 @@
 {
   "presets": ["es2015-without-regenerator"],
-  "plugins": ["transform-async-to-generator"]
+  "plugins": ["transform-async-to-generator", "transform-export-extensions"]
 }

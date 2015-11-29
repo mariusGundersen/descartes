@@ -1,6 +1,5 @@
 import assert from 'assert';
-import probe from '../lib/probe';
-import {withArgs, withExactArgs, onThis} from '../lib/matchers';
+import {probe, withArgs, withExactArgs, onThis} from '../lib/index';
 
 describe('called', function () {
 
