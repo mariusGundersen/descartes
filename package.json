@@ -36,6 +36,9 @@
     "prepublish": "gulp prepublish",
     "test": "gulp"
   },
+  "engines" : {
+    "node" : ">=4.0.0"
+  },
   "license": "MIT",
   "dependencies": {}
 }
