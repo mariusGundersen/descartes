@@ -15,9 +15,11 @@ $ npm install --save descartes
 import {Jar, withArgs, withExactArgs, onThis} from 'descartes';
 
 it("should behave like this", async function(){
-  const stub = probe();
-  const spy = sensor();
+  const jar = new Jar();
+  const stub = jar.probe('stub');
+  const spy = jar.sensor('spy');
   
+  //start async method
   const result = myAsyncMethod(spy, stub);
 
   await spy.called();
