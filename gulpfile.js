@@ -26,7 +26,7 @@ gulp.task('nsp', function (cb) {
 gulp.task('test', function (cb) {
   var mochaErr;
 
-  gulp.src('test/**/*.js')
+  gulp.src(['test/**/*.js', 'lib/**/*.test.js'])
     .pipe(plumber())
     .pipe(mocha({reporter: 'spec'}))
     .on('error', function (err) {
@@ -38,7 +38,7 @@ gulp.task('test', function (cb) {
 });
 
 gulp.task('onlyTest', function () {
-  return gulp.src('test/**/*.js')
+  return gulp.src(['test/**/*.js', 'lib/**/*.test.js'])
     .pipe(plumber())
     .pipe(mocha({reporter: 'spec'}));
 });
