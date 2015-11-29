@@ -1,16 +1,16 @@
 import assert from 'assert';
 import Jar from '../lib/Jar';
-import {withArgs, withExactArgs, onThis} from '../lib/matchers';
+import {withArgs, withExactArgs} from '../lib/matchers';
 
 describe('jar', function () {
-  
-  beforeEach(function(){
+
+  beforeEach(function (){
     this.jar = new Jar();
     this.log = this.jar.sensor('log');
     this.a = this.jar.probe('a');
     this.b = this.jar.probe('b');
   });
-  
+
   it('should check the global order of probes and sensors', async function () {
     const result = doSomethingAsync(this.log, this.a, this.b);
 

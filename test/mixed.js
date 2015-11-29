@@ -1,16 +1,16 @@
 import assert from 'assert';
 import probe from '../lib/probe';
 import sensor from '../lib/sensor';
-import {withArgs, withExactArgs, onThis} from '../lib/matchers';
+import {withArgs} from '../lib/matchers';
 
 describe('mixed', function () {
-  
-  beforeEach(function(){
+
+  beforeEach(function (){
     this.log = sensor();
     this.a = probe();
     this.b = probe();
   });
-  
+
   it('should handle sync methods too', async function () {
     const result = doSomethingAsync(this.log, this.a, this.b);
 

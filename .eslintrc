@@ -5,6 +5,7 @@
     "mocha": true,
     "es6": true
   },
+  "parser": "babel-eslint",
   "rules": {
     "array-bracket-spacing": [
       2,
@@ -118,7 +119,7 @@
     "no-new-object": 2,
     "no-spaced-func": 2,
     "no-trailing-spaces": 2,
-    "no-underscore-dangle": 2,
+    "no-underscore-dangle": 0,
     "semi": 2,
     "semi-spacing": [
       2,

@@ -1,5 +1,3 @@
-'use strict';
-var path = require('path');
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
 var excludeGitignore = require('gulp-exclude-gitignore');
@@ -12,7 +10,7 @@ var del = require('del');
 // Initialize the babel transpiler so ES2015 files gets compiled
 // when they're loaded
 require('babel-core/register');
-require("babel-polyfill");
+require('babel-polyfill');
 
 gulp.task('static', function () {
   return gulp.src('**/*.js')
