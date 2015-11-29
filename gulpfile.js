@@ -10,7 +10,6 @@ var del = require('del');
 // Initialize the babel transpiler so ES2015 files gets compiled
 // when they're loaded
 require('babel-core/register');
-require('babel-polyfill');
 
 gulp.task('static', function () {
   return gulp.src('**/*.js')
