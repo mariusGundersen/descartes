@@ -28,6 +28,7 @@ describe('jar', function () {
 
     await this.log.called(withExactArgs('called b'));
 
+    this.jar.done();
     assert.equal(await result, 5);
   });
 });
